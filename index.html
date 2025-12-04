@@ -1,228 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UTA PWYW Enrollment</title>
-
-  <style>
-    * { box-sizing: border-box; }
+<meta charset="UTF-8">
+<title>UTA PWYW Enrollment</title>
+<style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #eef4ff 0%, #f9fbff 50%, #e8f0ff 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
     }
 
-    header { text-align: center; padding: 16px 0 8px; }
-    header img { max-width: 300px; height: auto; }
+    header img {
+        margin-top: 20px;
+        width: 280px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
 
     .notice {
-      color: #d00000;
-      font-weight: bold;
-      text-align: center;
-      margin-top: 8px;
+        margin-top: 10px;
+        font-weight: bold;
+        color: red;
+        text-align: center;
     }
 
-    .main { flex: 1; display: flex; justify-content: center; padding: 20px 12px; }
-
-    .card {
-      background: #fff;
-      max-width: 720px;
-      width: 100%;
-      padding: 28px;
-      border-radius: 14px;
-      box-shadow: 0 8px 24px rgba(15,23,42,0.12);
+    .container {
+        background: #ffffff;
+        width: 90%;
+        max-width: 600px;
+        padding: 30px;
+        margin-top: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.1);
     }
 
-    .card h1 {
-      text-align: center;
-      font-size: 24px;
-      margin-bottom: 10px;
+    input[type="text"], input[type="email"], input[type="tel"] {
+        width: 100%;
+        padding: 12px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
     }
 
-    .card p {
-      margin: 6px 0;
-      font-size: 14px;
-      color: #374151;
-      line-height: 1.4;
-    }
-
-    label {
-      display: block;
-      margin-top: 14px;
-      font-weight: bold;
-      font-size: 14px;
-      color: #111827;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"] {
-      width: 100%;
-      padding: 10px;
-      margin-top: 4px;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    input[type="range"] {
-      width: 100%;
-      margin-top: 8px;
-    }
-
-    .payment-options label {
-      font-weight: normal;
-      display: block;
-      margin-top: 4px;
-    }
-
-    .payment-plan label {
-      font-weight: normal;
-      display: block;
-      margin-top: 4px;
-    }
-
-    #checkout-btn {
-      margin-top: 22px;
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
-      background: #005baa;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      text-align: center;
-    }
-
-    #checkout-btn:hover {
-      background: #00427f;
+    .submit-btn {
+        width: 100%;
+        margin-top: 20px;
+        padding: 15px;
+        background: #005bbb;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
     }
 
     footer {
-      text-align: center;
-      padding: 14px;
-      font-size: 13px;
-      background: #fff;
-      border-top: 1px solid #e3e6ef;
-      color: #4b5563;
+        margin-top: auto;
+        padding: 20px;
+        text-align: center;
+        font-size: 13px;
+        color: #555;
     }
-  </style>
+</style>
 </head>
 
 <body>
 
 <header>
-  <img src="assets/uta_logo_cropped.png" alt="UTA Logo">
+    <img src="assets/uta_logo_cropped.png">
 </header>
 
-<p class="notice">
-  PWYW (PAY WHAT YOU WANT) TUITION IS ONLY AVAILABLE FOR THE FIRST 20 ENROLLED STUDENTS
-</p>
+<div class="notice">PWYW (PAY WHAT YOU WANT) TUITION IS ONLY AVAILABLE FOR THE FIRST 20 ENROLLED STUDENTS</div>
 
-<div class="main">
-  <div class="card">
-    <h1>Pay What You Want (PWYW) Enrollment</h1>
+<div class="container">
+    <h2>Pay What You Want (PWYW) Enrollment</h2>
 
-    <!-- 🔹 Intro text that was missing -->
-    <p>
-      PWYW means <b>you choose your tuition</b> for the full Unix Training Academy training package.
-      Select an amount that fits your current financial situation and commitment level.
-    </p>
+    <p>PWYW means <strong>you choose your tuition</strong> for the full Unix Training Academy training package.</p>
 
-    <form id="payment-form">
+    <label>Full Name</label>
+    <input type="text">
 
-      <label>Full Name</label>
-      <input type="text" id="fullName" required>
+    <label>Email Address</label>
+    <input type="email">
 
-      <label>Email Address</label>
-      <input type="email" id="email" required>
+    <label>Phone Number</label>
+    <input type="tel">
 
-      <label>Phone Number</label>
-      <input type="tel" id="phone" required>
+    <h4>Choose Tuition Option</h4>
+    <label><input type="radio" name="tuition" checked> Full Tuition — $3,500</label><br>
+    <label><input type="radio" name="tuition"> Pay What You Want (PWYW)</label>
 
-      <label>Choose Tuition Option</label>
-      <div class="payment-options">
-        <label>
-          <input type="radio" name="tuitionOption" value="full" checked>
-          Full Tuition – $3,500
-        </label>
-        <label>
-          <input type="radio" name="tuitionOption" value="pwyw">
-          Pay What You Want (PWYW)
-        </label>
-      </div>
+    <br><br>
+    <div>PWYW Amount: $999</div>
+    <input type="range">
 
-      <!-- PWYW Slider + description + payment plan -->
-      <div id="pwyw-section">
-        <label>
-          PWYW Amount: <span id="amountLabel">$1,500</span>
-        </label>
-        <input type="range" id="amount" min="999" max="3500" value="1500">
+    <p>PWYW reflects our mission to make premium IT training accessible to everyone.</p>
 
-        <!-- 🔹 Text that was missing under the slider -->
-        <p>
-          PWYW reflects our mission to make premium IT training accessible to everyone.
-        </p>
+    <h4>Choose Payment Plan</h4>
+    <label><input type="radio" name="plan" checked> Full Payment — Pay the full tuition today.</label><br>
+    <label><input type="radio" name="plan"> 50% Today, 50% in 30 Days.</label>
 
-        <!-- 🔹 Payment plan options -->
-        <label>Choose Payment Plan</label>
-        <div class="payment-plan">
-          <label>
-            <input type="radio" name="paymentPlan" value="full" checked>
-            Full Payment – Pay the full tuition today.
-          </label>
-          <label>
-            <input type="radio" name="paymentPlan" value="split">
-            50% Today, 50% in 30 Days.
-          </label>
-        </div>
-      </div>
-
-      <button id="checkout-btn" type="submit">
-        Proceed to Secure Checkout
-      </button>
-    </form>
-  </div>
+    <button class="submit-btn">Proceed to Secure Checkout</button>
 </div>
 
 <footer>
-  © 2025 Unix Training Academy. All rights reserved.
+    © 2025 Unix Training Academy. All rights reserved.
 </footer>
-
-<script src="script.js"></script>
-
-<script>
-  const pwywSection = document.getElementById("pwyw-section");
-  const tuitionOptions = document.getElementsByName("tuitionOption");
-  const amountInput = document.getElementById("amount");
-  const amountLabel = document.getElementById("amountLabel");
-
-  function formatAmount(v) { return "$" + Number(v).toLocaleString(); }
-  amountLabel.textContent = formatAmount(amountInput.value);
-
-  amountInput.addEventListener("input", () =>
-    amountLabel.textContent = formatAmount(amountInput.value)
-  );
-
-  tuitionOptions.forEach(opt => {
-    opt.addEventListener("change", () => {
-      if (opt.value === "full" && opt.checked) {
-        pwywSection.style.display = "none";
-      } else if (opt.value === "pwyw" && opt.checked) {
-        pwywSection.style.display = "block";
-      }
-    });
-  });
-
-  // default: full tuition selected, so hide PWYW section
-  pwywSection.style.display = "none";
-</script>
 
 </body>
 </html>
