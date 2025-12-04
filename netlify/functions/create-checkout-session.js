@@ -9,26 +9,31 @@ exports.handler = async (event) => {
   try {
     const { studentName, email, amount, planType } = JSON.parse(event.body || "{}");
 
+    // Validate input
     if (!studentName || !email || !amount || !planType) {
       return { statusCode: 400, body: "Missing required fields" };
     }
 
     if (amount < 999 || amount > 3500) {
-      return { statusCode: 400, body: "Invalid tuition amount" };
+      return { statusCode: 400, body: "Invalid PWYW tuition amount" };
     }
 
     const tuitionCents = Math.round(amount * 100);
 
+    // Netlify env URLs
     const successUrl =
       process.env.SUCCESS_URL ||
-      "https://YOUR-SITE.netlify.app/success.html?session_id={CHECKOUT_SESSION_ID}";
+      "https://scintillating-dieffenbachia-89ff39.netlify.app/success.html?session_id={CHECKOUT_SESSION_ID}";
 
     const cancelUrl =
       process.env.CANCEL_URL ||
-      "https://YOUR-SITE.netlify.app/index.html";
+      "https://scintillating-dieffenbachia-89ff39.netlify.app/index.html";
 
     let session;
 
+    // ───────────────────────────────────────────────
+    // FULL PAYMENT
+    // ───────────────────────────────────────────────
     if (planType === "full") {
       session = await stripe.checkout.sessions.create({
         mode: "payment",
@@ -55,7 +60,12 @@ exports.handler = async (event) => {
           tuitionAmount: String(amount)
         }
       });
-    } else if (planType === "split") {
+    }
+
+    // ───────────────────────────────────────────────
+    // 50/50 PAYMENT PLAN
+    // ───────────────────────────────────────────────
+    else if (planType === "split") {
       const depositCents = Math.round(tuitionCents * 0.5);
       const remainingCents = tuitionCents - depositCents;
 
@@ -86,7 +96,9 @@ exports.handler = async (event) => {
           remainingAmountCents: String(remainingCents)
         }
       });
-    } else {
+    }
+
+    else {
       return { statusCode: 400, body: "Invalid plan type" };
     }
 
@@ -94,8 +106,9 @@ exports.handler = async (event) => {
       statusCode: 200,
       body: JSON.stringify({ url: session.url })
     };
+
   } catch (err) {
-    console.error("Stripe error:", err);
+    console.error("Stripe create session error:", err);
     return { statusCode: 500, body: "Internal Server Error" };
   }
 };

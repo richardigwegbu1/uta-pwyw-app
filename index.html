@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Unix Training Academy – PWYW Enrollment</title>
+  <title>Unix Training Academy – Pay What You Want (PWYW) Enrollment</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -21,14 +21,16 @@
 
     <main class="main">
       <section class="card">
+
         <!-- RED SCARCITY NOTE -->
         <p class="limit-warning">
-          PWYW TUITION IS ONLY AVAILABLE FOR THE FIRST 20 ENROLLED STUDENTS
+          PWYW (PAY WHAT YOU WANT) TUITION IS ONLY AVAILABLE FOR THE FIRST 20 ENROLLED STUDENTS
         </p>
 
-        <h2>Pay What You Want Enrollment</h2>
+        <h2>Pay What You Want (PWYW) Enrollment</h2>
         <p>
-          Choose your tuition for the full Unix Training Academy training package.
+          PWYW means <strong>you choose your tuition</strong> for the full Unix Training Academy training package.
+          Select an amount that fits your current financial situation and commitment level.
         </p>
 
         <form id="enrollForm">
@@ -47,7 +49,7 @@
           <!-- PWYW Slider -->
           <div class="form-group">
             <label for="tuitionSlider">
-              Select Your Tuition:
+              Select Your Tuition (PWYW):
               <span id="tuitionAmountLabel">$1,500</span>
             </label>
             <input
@@ -60,13 +62,17 @@
             />
           </div>
 
+          <p class="fine-print">
+            PWYW reflects our mission to make premium IT training accessible to everyone.
+          </p>
+
           <!-- Payment Plan -->
           <div class="form-group">
             <label>Choose Payment Plan</label>
 
             <label class="radio-option">
               <input type="radio" name="planType" value="full" checked />
-              Full Payment – pay the full tuition today.
+              Full Payment – Pay the full tuition today.
             </label>
 
             <label class="radio-option">
@@ -84,8 +90,7 @@
         </form>
 
         <p class="fine-print">
-          Payments are securely processed by Stripe. Your card details never touch our
-          servers.
+          Payments are securely processed by Stripe. Your card details never touch our servers.
         </p>
       </section>
     </main>
