@@ -6,10 +6,7 @@
   <title>UTA PWYW Enrollment</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -19,221 +16,139 @@
       min-height: 100vh;
     }
 
-    /* HEADER + LOGO */
-    header {
-      background: #ffffff;
-      padding: 16px 0 8px;
-      text-align: center;
-      border-bottom: 1px solid #e3e6ef;
-    }
+    header { text-align: center; padding: 16px 0 8px; }
+    header img { max-width: 300px; height: auto; }
 
-    header img {
-      max-width: 320px;     /* controls logo size */
-      height: auto;
-    }
-
-    /* RED NOTICE */
     .notice {
       color: #d00000;
       font-weight: bold;
       text-align: center;
-      margin: 10px 16px 0;
-      font-size: 16px;
+      margin-top: 8px;
     }
 
-    /* MAIN WRAPPER */
-    .main {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      padding: 20px 12px 40px;
-    }
+    .main { flex: 1; display: flex; justify-content: center; padding: 20px 12px; }
 
-    /* CARD */
     .card {
-      background: #ffffff;
+      background: #fff;
       max-width: 720px;
       width: 100%;
-      margin: 0 auto;
-      padding: 24px 28px 28px;
+      padding: 28px;
       border-radius: 14px;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
-      text-align: left;
+      box-shadow: 0 8px 24px rgba(15,23,42,0.12);
     }
 
-    .card h1 {
-      text-align: center;
-      margin: 0 0 10px;
-      font-size: 24px;
-      color: #111827;
+    .card h1 { text-align: center; font-size: 24px; margin-bottom: 14px; }
+
+    label { display: block; margin-top: 14px; font-weight: bold; }
+    input[type="text"], input[type="email"], input[type="tel"] {
+      width: 100%; padding: 10px; margin-top: 4px;
+      border: 1px solid #cbd5e1; border-radius: 6px;
     }
 
-    .card p {
-      margin: 6px 0;
-      font-size: 14px;
-      color: #374151;
-      line-height: 1.4;
-    }
+    input[type="range"] { width: 100%; margin-top: 8px; }
 
-    label {
-      display: block;
-      margin-top: 14px;
-      font-weight: bold;
-      font-size: 14px;
-      color: #111827;
-    }
+    .payment-options label { font-weight: normal; margin-top: 4px; }
 
-    input[type="text"],
-    input[type="email"] {
-      width: 100%;
-      padding: 9px 10px;
-      margin-top: 4px;
-      border-radius: 6px;
-      border: 1px solid #cbd5e1;
-      font-size: 14px;
-    }
-
-    input[type="range"] {
-      width: 100%;
-      margin-top: 10px;
-    }
-
-    .slider-label {
-      font-weight: bold;
-      color: #0f172a;
-    }
-
-    .payment-options {
-      margin-top: 10px;
-    }
-
-    .payment-options label {
-      font-weight: normal;
-      display: block;
-      margin: 4px 0;
-    }
-
-    /* BUTTON */
     #checkout-btn {
       margin-top: 22px;
-      display: block;
-      width: 100%;
-      padding: 13px;
-      border: none;
-      border-radius: 8px;
-      background: #005baa;
-      color: #ffffff;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      text-align: center;
+      width: 100%; padding: 14px;
+      border: none; border-radius: 8px;
+      background: #005baa; color: white;
+      font-size: 16px; font-weight: bold;
+      cursor: pointer; text-align: center;
     }
 
-    #checkout-btn:hover {
-      background: #00427f;
-    }
-
-    /* FOOTER */
     footer {
-      text-align: center;
-      padding: 14px 10px 18px;
-      font-size: 13px;
-      color: #4b5563;
-      background: #ffffff;
-      border-top: 1px solid #e3e6ef;
+      text-align: center; padding: 14px; font-size: 13px;
+      background: #fff; border-top: 1px solid #e3e6ef;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER LOGO -->
-  <header>
-    <!-- Make sure this path & file name exists -->
-    <img src="assets/uta_logo_cropped.png" alt="UTA Logo">
-  </header>
+<header>
+  <img src="assets/uta_logo_cropped.png" alt="UTA Logo">
+</header>
 
-  <!-- RED PWYW NOTICE -->
-  <p class="notice">
-    PWYW (PAY WHAT YOU WANT) TUITION IS ONLY AVAILABLE FOR THE FIRST 20 ENROLLED STUDENTS
-  </p>
+<p class="notice">PWYW (PAY WHAT YOU WANT) TUITION IS ONLY AVAILABLE FOR THE FIRST 20 ENROLLED STUDENTS</p>
 
-  <!-- MAIN CONTENT -->
-  <div class="main">
-    <div class="card">
-      <h1>Pay What You Want (PWYW) Enrollment</h1>
+<div class="main">
+  <div class="card">
+    <h1>Pay What You Want (PWYW) Enrollment</h1>
 
-      <p>
-        PWYW means <b>you choose your tuition</b> for the full Unix Training Academy training package.
-        Select an amount that fits your current financial situation and commitment level.
-      </p>
+    <form id="payment-form">
 
-      <form id="payment-form">
-        <label for="fullName">Full Name</label>
-        <input type="text" id="fullName" name="fullName" required>
+      <label>Full Name</label>
+      <input type="text" id="fullName" required>
 
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" required>
+      <label>Email Address</label>
+      <input type="email" id="email" required>
 
-        <label for="amount">
-          <span class="slider-label">Select Your Tuition (PWYW): </span>
-          <span id="amountLabel">$1,500</span>
+      <label>Phone Number</label>
+      <input type="tel" id="phone" required>
+
+      <label>Choose Tuition Option</label>
+      <div class="payment-options">
+        <label>
+          <input type="radio" name="tuitionOption" value="full" checked>
+          Full Tuition – $3,500
         </label>
-        <input
-          type="range"
-          id="amount"
-          name="amount"
-          min="999"
-          max="3500"
-          value="1500"
-        >
+        <label>
+          <input type="radio" name="tuitionOption" value="pwyw">
+          Pay What You Want (PWYW)
+        </label>
+      </div>
 
-        <p>
-          PWYW reflects our mission to make premium IT training accessible to everyone.
-        </p>
+      <div id="pwyw-section">
+        <label>
+          PWYW Amount: <span id="amountLabel">$1,500</span>
+        </label>
+        <input type="range" id="amount" min="999" max="3500" value="1500">
+      </div>
 
-        <label>Choose Payment Plan</label>
-        <div class="payment-options">
-          <label>
-            <input type="radio" name="plan" value="full" checked>
-            Full Payment – Pay the full tuition today.
-          </label>
-          <label>
-            <input type="radio" name="plan" value="split">
-            50% Today, 50% in 30 Days.
-          </label>
-        </div>
+      <button id="checkout-btn" type="submit">
+        Proceed to Secure Checkout
+      </button>
 
-        <button type="submit" id="checkout-btn">
-          Proceed to Secure Checkout
-        </button>
-      </form>
-    </div>
+    </form>
   </div>
+</div>
 
-  <!-- FOOTER -->
-  <footer>
-    © 2025 Unix Training Academy. All rights reserved.
-  </footer>
+<footer>
+  © 2025 Unix Training Academy. All rights reserved.
+</footer>
 
-  <!-- Your Stripe / Netlify JS file, unchanged -->
-  <script src="script.js"></script>
+<script src="script.js"></script>
 
-  <!-- Small helper script to update slider label -->
-  <script>
-    const amountInput = document.getElementById('amount');
-    const amountLabel = document.getElementById('amountLabel');
+<script>
+  const pwywSection = document.getElementById("pwyw-section");
+  const tuitionOptions = document.getElementsByName("tuitionOption");
+  const amountInput = document.getElementById("amount");
+  const amountLabel = document.getElementById("amountLabel");
 
-    function formatAmount(value) {
-      return '$' + Number(value).toLocaleString();
-    }
+  /** Format slider value **/
+  function formatAmount(v) { return "$" + Number(v).toLocaleString(); }
+  amountLabel.textContent = formatAmount(amountInput.value);
 
-    amountLabel.textContent = formatAmount(amountInput.value);
+  /** Update label when slider moves **/
+  amountInput.addEventListener("input", () =>
+    amountLabel.textContent = formatAmount(amountInput.value)
+  );
 
-    amountInput.addEventListener('input', () => {
-      amountLabel.textContent = formatAmount(amountInput.value);
+  /** Hide/Show PWYW slider **/
+  tuitionOptions.forEach(opt => {
+    opt.addEventListener("change", () => {
+      if (opt.value === "full" && opt.checked) {
+        pwywSection.style.display = "none";
+      } else {
+        pwywSection.style.display = "block";
+      }
     });
-  </script>
+  });
+
+  pwywSection.style.display = "none"; // default since full is selected
+</script>
 
 </body>
 </html>

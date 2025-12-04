@@ -1,104 +1,31 @@
-/* RESET */
-body, h1, h2, p, label {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  body {
-    background: #f7f9fc;
-    text-align: center;
-  }
-  
-  /* HEADER LOGO */
-  header {
-    padding: 10px 0;
-  }
-  
-  .uta-logo {
-    width: 380px;   /* Reduce logo size */
-    margin-top: 5px;
-  }
-  
-  /* RED NOTICE */
-  .notice {
-    color: red;
-    font-size: 18px;
-    font-weight: bold;
-    margin: 15px 0;
-  }
-  
-  /* FORM CARD */
-  .card {
-    background: white;
-    width: 55%;
-    max-width: 650px;
-    margin: 20px auto;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.15);
-    text-align: left;
-  }
-  
-  .card h2 {
-    text-align: center;
-    margin-bottom: 12px;
-  }
-  
-  .description {
-    font-size: 14px;
-    margin-bottom: 10px;
-  }
-  
-  /* FORM ELEMENTS */
-  form label {
-    font-weight: bold;
-    display: block;
-    margin: 10px 0 4px;
-  }
-  
-  input[type="text"], input[type="email"] {
-    width: 100%;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #bbb;
-    margin-bottom: 12px;
-  }
-  
-  input[type="range"] {
-    width: 100%;
-    margin: 10px 0;
-  }
-  
-  /* PAYMENT OPTIONS */
-  .payment-options label {
-    display: block;
-    margin: 6px 0;
-  }
-  
-  /* BUTTON */
-  #checkout-btn {
-    display: block;
-    width: 100%;
-    padding: 14px;
-    background-color: #005baa;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 18px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  
-  #checkout-btn:hover {
-    background-color: #003f78;
-  }
-  
-  /* FOOTER */
-  footer {
-    margin-top: 50px;
-    padding: 20px 0;
-    font-size: 14px;
-    color: #555;
-  }
-  
+const form = document.getElementById("payment-form");
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const fullName = document.getElementById("fullName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const tuitionOption = document.querySelector('input[name="tuitionOption"]:checked').value;
+
+    let amount = tuitionOption === "full"
+        ? 3500
+        : Number(document.getElementById("amount").value);
+
+    const payload = { fullName, email, phone, amount };
+
+    const res = await fetch("/.netlify/functions/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    if (data.url) {
+        window.location.href = data.url; // redirect to Stripe Checkout
+    } else {
+        alert("There was a problem creating the checkout session.");
+        console.error(data);
+    }
+});
