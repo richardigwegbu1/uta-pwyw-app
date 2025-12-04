@@ -1,31 +1,38 @@
-const form = document.getElementById("payment-form");
-
-form.addEventListener("submit", async (e) => {
+document.getElementById("payment-form").addEventListener("submit", async (e) => {
     e.preventDefault();
-
-    const fullName = document.getElementById("fullName").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const tuitionOption = document.querySelector('input[name="tuitionOption"]:checked').value;
-
-    let amount = tuitionOption === "full"
-        ? 3500
-        : Number(document.getElementById("amount").value);
-
-    const payload = { fullName, email, phone, amount };
-
-    const res = await fetch("/.netlify/functions/create-checkout-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+  
+    const fullName = document.getElementById("fullName").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+  
+    const tuitionOption = document.querySelector("input[name='tuitionOption']:checked").value;
+    const paymentPlan = document.querySelector("input[name='paymentPlan']:checked")
+      ? document.querySelector("input[name='paymentPlan']:checked").value
+      : "";
+  
+    const pwywAmount =
+      tuitionOption === "pwyw" ? document.getElementById("amount").value : "";
+  
+    // Build payload
+    const payload = {
+      fullName,
+      email,
+      phone,
+      tuitionOption,
+      pwywAmount,
+      paymentPlan,
+    };
+  
+    const res = await fetch("/.netlify/functions/saveToSheet", {
+      method: "POST",
+      body: JSON.stringify(payload),
     });
-
-    const data = await res.json();
-
-    if (data.url) {
-        window.location.href = data.url; // redirect to Stripe Checkout
+  
+    const result = await res.json();
+    if (res.ok) {
+      alert("Enrollment saved successfully!");
     } else {
-        alert("There was a problem creating the checkout session.");
-        console.error(data);
+      alert("Error: " + result.error);
     }
-});
+  });
+  
