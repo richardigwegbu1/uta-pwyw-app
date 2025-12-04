@@ -37,30 +37,80 @@
       box-shadow: 0 8px 24px rgba(15,23,42,0.12);
     }
 
-    .card h1 { text-align: center; font-size: 24px; margin-bottom: 14px; }
-
-    label { display: block; margin-top: 14px; font-weight: bold; }
-    input[type="text"], input[type="email"], input[type="tel"] {
-      width: 100%; padding: 10px; margin-top: 4px;
-      border: 1px solid #cbd5e1; border-radius: 6px;
+    .card h1 {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 10px;
     }
 
-    input[type="range"] { width: 100%; margin-top: 8px; }
+    .card p {
+      margin: 6px 0;
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.4;
+    }
 
-    .payment-options label { font-weight: normal; margin-top: 4px; }
+    label {
+      display: block;
+      margin-top: 14px;
+      font-weight: bold;
+      font-size: 14px;
+      color: #111827;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 4px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .payment-options label {
+      font-weight: normal;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .payment-plan label {
+      font-weight: normal;
+      display: block;
+      margin-top: 4px;
+    }
 
     #checkout-btn {
       margin-top: 22px;
-      width: 100%; padding: 14px;
-      border: none; border-radius: 8px;
-      background: #005baa; color: white;
-      font-size: 16px; font-weight: bold;
-      cursor: pointer; text-align: center;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #005baa;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    #checkout-btn:hover {
+      background: #00427f;
     }
 
     footer {
-      text-align: center; padding: 14px; font-size: 13px;
-      background: #fff; border-top: 1px solid #e3e6ef;
+      text-align: center;
+      padding: 14px;
+      font-size: 13px;
+      background: #fff;
+      border-top: 1px solid #e3e6ef;
+      color: #4b5563;
     }
   </style>
 </head>
@@ -71,11 +121,19 @@
   <img src="assets/uta_logo_cropped.png" alt="UTA Logo">
 </header>
 
-<p class="notice">PWYW (PAY WHAT YOU WANT) TUITION IS ONLY AVAILABLE FOR THE FIRST 20 ENROLLED STUDENTS</p>
+<p class="notice">
+  PWYW (PAY WHAT YOU WANT) TUITION IS ONLY AVAILABLE FOR THE FIRST 20 ENROLLED STUDENTS
+</p>
 
 <div class="main">
   <div class="card">
     <h1>Pay What You Want (PWYW) Enrollment</h1>
+
+    <!-- 🔹 Intro text that was missing -->
+    <p>
+      PWYW means <b>you choose your tuition</b> for the full Unix Training Academy training package.
+      Select an amount that fits your current financial situation and commitment level.
+    </p>
 
     <form id="payment-form">
 
@@ -100,17 +158,35 @@
         </label>
       </div>
 
+      <!-- PWYW Slider + description + payment plan -->
       <div id="pwyw-section">
         <label>
           PWYW Amount: <span id="amountLabel">$1,500</span>
         </label>
         <input type="range" id="amount" min="999" max="3500" value="1500">
+
+        <!-- 🔹 Text that was missing under the slider -->
+        <p>
+          PWYW reflects our mission to make premium IT training accessible to everyone.
+        </p>
+
+        <!-- 🔹 Payment plan options -->
+        <label>Choose Payment Plan</label>
+        <div class="payment-plan">
+          <label>
+            <input type="radio" name="paymentPlan" value="full" checked>
+            Full Payment – Pay the full tuition today.
+          </label>
+          <label>
+            <input type="radio" name="paymentPlan" value="split">
+            50% Today, 50% in 30 Days.
+          </label>
+        </div>
       </div>
 
       <button id="checkout-btn" type="submit">
         Proceed to Secure Checkout
       </button>
-
     </form>
   </div>
 </div>
@@ -127,27 +203,25 @@
   const amountInput = document.getElementById("amount");
   const amountLabel = document.getElementById("amountLabel");
 
-  /** Format slider value **/
   function formatAmount(v) { return "$" + Number(v).toLocaleString(); }
   amountLabel.textContent = formatAmount(amountInput.value);
 
-  /** Update label when slider moves **/
   amountInput.addEventListener("input", () =>
     amountLabel.textContent = formatAmount(amountInput.value)
   );
 
-  /** Hide/Show PWYW slider **/
   tuitionOptions.forEach(opt => {
     opt.addEventListener("change", () => {
       if (opt.value === "full" && opt.checked) {
         pwywSection.style.display = "none";
-      } else {
+      } else if (opt.value === "pwyw" && opt.checked) {
         pwywSection.style.display = "block";
       }
     });
   });
 
-  pwywSection.style.display = "none"; // default since full is selected
+  // default: full tuition selected, so hide PWYW section
+  pwywSection.style.display = "none";
 </script>
 
 </body>

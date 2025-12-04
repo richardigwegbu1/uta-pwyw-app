@@ -1,60 +1,47 @@
-const tuitionSlider = document.getElementById("tuitionSlider");
-const tuitionLabel = document.getElementById("tuitionAmountLabel");
-const enrollForm = document.getElementById("enrollForm");
-const enrollButton = document.getElementById("enrollButton");
-const errorMessage = document.getElementById("errorMessage");
+const form = document.getElementById("payment-form");
 
-document.getElementById("year").textContent = new Date().getFullYear();
-
-// Initial label (default 1500)
-tuitionLabel.textContent = "$1,500";
-
-// Update label as slider moves
-tuitionSlider.addEventListener("input", () => {
-  tuitionLabel.textContent = `$${Number(tuitionSlider.value).toLocaleString()}`;
-});
-
-// Submit handler
-enrollForm.addEventListener("submit", async (e) => {
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  errorMessage.hidden = true;
-  errorMessage.textContent = "";
 
-  const studentName = document.getElementById("studentName").value.trim();
+  const fullName = document.getElementById("fullName").value.trim();
   const email = document.getElementById("email").value.trim();
-  const amount = Number(tuitionSlider.value);
-  const planType = document.querySelector("input[name='planType']:checked").value;
+  const phone = document.getElementById("phone").value.trim();
 
-  if (!studentName || !email) {
-    errorMessage.textContent = "Please fill out all required fields.";
-    errorMessage.hidden = false;
-    return;
-  }
+  const tuitionOption = document.querySelector('input[name="tuitionOption"]:checked').value;
+  let amount = tuitionOption === "full"
+    ? 3500
+    : Number(document.getElementById("amount").value);
 
-  enrollButton.disabled = true;
-  enrollButton.textContent = "Redirecting to Stripe…";
+  // payment plan only really matters for PWYW, but we send it either way
+  const paymentPlanRadio = document.querySelector('input[name="paymentPlan"]:checked');
+  const paymentPlan = paymentPlanRadio ? paymentPlanRadio.value : "full";
+
+  const payload = {
+    fullName,
+    email,
+    phone,
+    amount,
+    tuitionOption,
+    paymentPlan
+  };
 
   try {
     const res = await fetch("/.netlify/functions/create-checkout-session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ studentName, email, amount, planType }),
+      body: JSON.stringify(payload)
     });
 
-    if (!res.ok) {
-      throw new Error("Server error");
-    }
-
     const data = await res.json();
-    if (!data.url) throw new Error("No Stripe URL returned");
 
-    window.location.href = data.url;
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      alert("There was a problem creating the checkout session.");
+      console.error(data);
+    }
   } catch (err) {
+    alert("Network error while creating checkout session.");
     console.error(err);
-    errorMessage.textContent =
-      "Something went wrong creating the checkout session. Please try again.";
-    errorMessage.hidden = false;
-    enrollButton.disabled = false;
-    enrollButton.textContent = "Proceed to Secure Checkout";
   }
 });
