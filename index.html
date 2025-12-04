@@ -8,40 +8,47 @@
     body {
         margin: 0;
         font-family: Arial, sans-serif;
-        background: #f5f7fa;
+        background: #f8faff;
     }
 
     .hero {
         width: 100%;
-        padding: 80px 0;
-        background: url('assets/hero-banner.jpg') center/cover no-repeat;
-        display: flex;
-        justify-content: center;
+        padding: 90px 0;
+        background:
+            linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+            url('assets/hero-banner.jpg') center/cover no-repeat;
+        text-align: center;
     }
 
     .hero img {
         width: 300px;
-        filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+        filter: drop-shadow(0 3px 5px rgba(0,0,0,0.5));
+    }
+
+    .hero h1 {
+        color: white;
+        margin-top: 15px;
+        font-size: 26px;
     }
 
     .notice {
         font-weight: bold;
         color: red;
         text-align: center;
-        margin-top: 15px;
+        margin-top: 20px;
     }
 
     .container {
-        background: #fff;
+        background: white;
         width: 90%;
         max-width: 600px;
         margin: 30px auto;
         padding: 30px;
         border-radius: 14px;
-        box-shadow: 0 6px 22px rgba(0,0,0,0.12);
+        box-shadow: 0 10px 28px rgba(0,0,0,0.18);
     }
 
-    input {
+    input, button {
         width: 100%;
         padding: 12px;
         border-radius: 6px;
@@ -50,19 +57,15 @@
     }
 
     button {
-        width: 100%;
-        padding: 15px;
         background: #005bbb;
-        border: none;
         color: white;
-        border-radius: 6px;
-        font-size: 16px;
+        border: none;
+        font-size: 15px;
     }
 
     footer {
         text-align: center;
         padding: 20px;
-        color: #666;
     }
 </style>
 
@@ -71,14 +74,15 @@
 
 <div class="hero">
     <img src="assets/uta_logo_cropped.png">
+    <h1>Learn IT by Doing — Start Your Training</h1>
 </div>
 
-<div class="notice">PWYW (PAY WHAT YOU WANT) TUITION IS ONLY AVAILABLE FOR THE FIRST 20 STUDENTS</div>
+<div class="notice">PWYW TUITION IS ONLY AVAILABLE FOR THE FIRST 20 STUDENTS</div>
 
 <div class="container">
 
     <h2>Pay What You Want (PWYW) Enrollment</h2>
-    <p>PWYW means <strong>you choose your tuition</strong> based on your current financial situation and commitment level.</p>
+    <p>PWYW means <strong>you choose your tuition</strong> for the full Unix Training Academy training package.</p>
 
     <label>Full Name</label>
     <input type="text">
@@ -96,11 +100,11 @@
     <h4>PWYW Amount</h4>
     <input type="range">
 
-    <p>PWYW reflects our mission to make premium IT training accessible to everyone.</p>
+    <p>PWYW reflects our mission to make IT training accessible.</p>
 
     <h4>Choose Payment Plan</h4>
-    <label><input type="radio" name="plan"> Full Payment — Pay today.</label><br>
-    <label><input type="radio" name="plan" checked> 50% Today, 50% in 30 Days.</label>
+    <label><input type="radio" name="plan"> Full Payment</label><br>
+    <label><input type="radio" name="plan" checked> 50% Today, 50% in 30 Days</label>
 
     <button>Proceed to Secure Checkout</button>
 
