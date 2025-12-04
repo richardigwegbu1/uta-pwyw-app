@@ -3,86 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <title>UTA PWYW Enrollment</title>
+
 <style>
     body {
         margin: 0;
         font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #eef4ff 0%, #f9fbff 50%, #e8f0ff 100%);
+        background: #f5f7fa;
+    }
+
+    .hero {
+        width: 100%;
+        padding: 80px 0;
+        background: url('assets/hero-banner.jpg') center/cover no-repeat;
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 100vh;
+        justify-content: center;
     }
 
-    header img {
-        margin-top: 20px;
-        width: 280px;
-    }
-
-    h2 {
-        text-align: center;
-        margin-bottom: 10px;
+    .hero img {
+        width: 300px;
+        filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
     }
 
     .notice {
-        margin-top: 10px;
         font-weight: bold;
         color: red;
         text-align: center;
+        margin-top: 15px;
     }
 
     .container {
-        background: #ffffff;
+        background: #fff;
         width: 90%;
         max-width: 600px;
+        margin: 30px auto;
         padding: 30px;
-        margin-top: 20px;
-        border-radius: 12px;
-        box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+        border-radius: 14px;
+        box-shadow: 0 6px 22px rgba(0,0,0,0.12);
     }
 
-    input[type="text"], input[type="email"], input[type="tel"] {
+    input {
         width: 100%;
         padding: 12px;
-        margin-top: 5px;
-        border: 1px solid #ccc;
         border-radius: 6px;
+        border: 1px solid #ccc;
+        margin-bottom: 12px;
     }
 
-    .submit-btn {
+    button {
         width: 100%;
-        margin-top: 20px;
         padding: 15px;
         background: #005bbb;
-        color: white;
         border: none;
+        color: white;
         border-radius: 6px;
         font-size: 16px;
-        cursor: pointer;
     }
 
     footer {
-        margin-top: auto;
-        padding: 20px;
         text-align: center;
-        font-size: 13px;
-        color: #555;
+        padding: 20px;
+        color: #666;
     }
 </style>
-</head>
 
+</head>
 <body>
 
-<header>
+<div class="hero">
     <img src="assets/uta_logo_cropped.png">
-</header>
+</div>
 
-<div class="notice">PWYW (PAY WHAT YOU WANT) TUITION IS ONLY AVAILABLE FOR THE FIRST 20 ENROLLED STUDENTS</div>
+<div class="notice">PWYW (PAY WHAT YOU WANT) TUITION IS ONLY AVAILABLE FOR THE FIRST 20 STUDENTS</div>
 
 <div class="container">
-    <h2>Pay What You Want (PWYW) Enrollment</h2>
 
-    <p>PWYW means <strong>you choose your tuition</strong> for the full Unix Training Academy training package.</p>
+    <h2>Pay What You Want (PWYW) Enrollment</h2>
+    <p>PWYW means <strong>you choose your tuition</strong> based on your current financial situation and commitment level.</p>
 
     <label>Full Name</label>
     <input type="text">
@@ -97,17 +93,17 @@
     <label><input type="radio" name="tuition" checked> Full Tuition — $3,500</label><br>
     <label><input type="radio" name="tuition"> Pay What You Want (PWYW)</label>
 
-    <br><br>
-    <div>PWYW Amount: $999</div>
+    <h4>PWYW Amount</h4>
     <input type="range">
 
     <p>PWYW reflects our mission to make premium IT training accessible to everyone.</p>
 
     <h4>Choose Payment Plan</h4>
-    <label><input type="radio" name="plan" checked> Full Payment — Pay the full tuition today.</label><br>
-    <label><input type="radio" name="plan"> 50% Today, 50% in 30 Days.</label>
+    <label><input type="radio" name="plan"> Full Payment — Pay today.</label><br>
+    <label><input type="radio" name="plan" checked> 50% Today, 50% in 30 Days.</label>
 
-    <button class="submit-btn">Proceed to Secure Checkout</button>
+    <button>Proceed to Secure Checkout</button>
+
 </div>
 
 <footer>
