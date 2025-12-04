@@ -1,114 +1,60 @@
-const Stripe = require("stripe");
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+// netlify/functions/create-checkout-session.js
 
-exports.handler = async (event) => {
-  if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Method Not Allowed" };
-  }
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
+exports.handler = async (event, context) => {
   try {
-    const { studentName, email, amount, planType } = JSON.parse(event.body || "{}");
+    const body = JSON.parse(event.body);
 
-    // Validate input
-    if (!studentName || !email || !amount || !planType) {
-      return { statusCode: 400, body: "Missing required fields" };
-    }
+    const { fullName, email, amount, paymentPlan } = body;
 
-    if (amount < 999 || amount > 3500) {
-      return { statusCode: 400, body: "Invalid PWYW tuition amount" };
-    }
+    let lineItems = [];
 
-    const tuitionCents = Math.round(amount * 100);
-
-    // Netlify env URLs
-    const successUrl =
-      process.env.SUCCESS_URL ||
-      "https://scintillating-dieffenbachia-89ff39.netlify.app/success.html?session_id={CHECKOUT_SESSION_ID}";
-
-    const cancelUrl =
-      process.env.CANCEL_URL ||
-      "https://scintillating-dieffenbachia-89ff39.netlify.app/index.html";
-
-    let session;
-
-    // ───────────────────────────────────────────────
-    // FULL PAYMENT
-    // ───────────────────────────────────────────────
-    if (planType === "full") {
-      session = await stripe.checkout.sessions.create({
-        mode: "payment",
-        customer_email: email,
-        line_items: [
-          {
-            price_data: {
-              currency: "usd",
-              product_data: {
-                name: "Unix Training Academy – PWYW Full Payment",
-                description: `Full tuition: $${amount.toLocaleString()}`
-              },
-              unit_amount: tuitionCents
-            },
-            quantity: 1
-          }
-        ],
-        success_url: successUrl,
-        cancel_url: cancelUrl,
-        metadata: {
-          studentName,
-          email,
-          planType: "full",
-          tuitionAmount: String(amount)
-        }
+    // Split payment — charge 50% now
+    if (paymentPlan === "split") {
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: { name: "UTA Training — 50% initial payment" },
+          unit_amount: Math.round(amount * 0.5 * 100),
+        },
+        quantity: 1,
+      });
+    } else {
+      // Full payment
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: { name: "UTA Training — Full Payment" },
+          unit_amount: amount * 100,
+        },
+        quantity: 1,
       });
     }
 
-    // ───────────────────────────────────────────────
-    // 50/50 PAYMENT PLAN
-    // ───────────────────────────────────────────────
-    else if (planType === "split") {
-      const depositCents = Math.round(tuitionCents * 0.5);
-      const remainingCents = tuitionCents - depositCents;
-
-      session = await stripe.checkout.sessions.create({
-        mode: "payment",
-        customer_email: email,
-        line_items: [
-          {
-            price_data: {
-              currency: "usd",
-              product_data: {
-                name: "Unix Training Academy – PWYW 50% Deposit",
-                description: `50% deposit on tuition: $${amount.toLocaleString()}`
-              },
-              unit_amount: depositCents
-            },
-            quantity: 1
-          }
-        ],
-        success_url: successUrl,
-        cancel_url: cancelUrl,
-        metadata: {
-          studentName,
-          email,
-          planType: "split",
-          tuitionAmount: String(amount),
-          depositAmountCents: String(depositCents),
-          remainingAmountCents: String(remainingCents)
-        }
-      });
-    }
-
-    else {
-      return { statusCode: 400, body: "Invalid plan type" };
-    }
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      customer_email: email,
+      line_items: lineItems,
+      success_url: process.env.SUCCESS_URL,
+      cancel_url: process.env.CANCEL_URL,
+      metadata: {
+        student_name: fullName,
+        student_email: email,
+        tuition_amount: amount,
+      },
+    });
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ url: session.url })
+      body: JSON.stringify({ url: session.url }),
     };
-
   } catch (err) {
-    console.error("Stripe create session error:", err);
-    return { statusCode: 500, body: "Internal Server Error" };
+    console.error("Stripe Error:", err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: err.message }),
+    };
   }
 };
