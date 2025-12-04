@@ -4,64 +4,236 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UTA PWYW Enrollment</title>
-  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* HEADER + LOGO */
+    header {
+      background: #ffffff;
+      padding: 16px 0 8px;
+      text-align: center;
+      border-bottom: 1px solid #e3e6ef;
+    }
+
+    header img {
+      max-width: 320px;     /* controls logo size */
+      height: auto;
+    }
+
+    /* RED NOTICE */
+    .notice {
+      color: #d00000;
+      font-weight: bold;
+      text-align: center;
+      margin: 10px 16px 0;
+      font-size: 16px;
+    }
+
+    /* MAIN WRAPPER */
+    .main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      padding: 20px 12px 40px;
+    }
+
+    /* CARD */
+    .card {
+      background: #ffffff;
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 28px 28px;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+      text-align: left;
+    }
+
+    .card h1 {
+      text-align: center;
+      margin: 0 0 10px;
+      font-size: 24px;
+      color: #111827;
+    }
+
+    .card p {
+      margin: 6px 0;
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.4;
+    }
+
+    label {
+      display: block;
+      margin-top: 14px;
+      font-weight: bold;
+      font-size: 14px;
+      color: #111827;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 9px 10px;
+      margin-top: 4px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      font-size: 14px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .slider-label {
+      font-weight: bold;
+      color: #0f172a;
+    }
+
+    .payment-options {
+      margin-top: 10px;
+    }
+
+    .payment-options label {
+      font-weight: normal;
+      display: block;
+      margin: 4px 0;
+    }
+
+    /* BUTTON */
+    #checkout-btn {
+      margin-top: 22px;
+      display: block;
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 8px;
+      background: #005baa;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    #checkout-btn:hover {
+      background: #00427f;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 14px 10px 18px;
+      font-size: 13px;
+      color: #4b5563;
+      background: #ffffff;
+      border-top: 1px solid #e3e6ef;
+    }
+  </style>
 </head>
 
 <body>
 
-  <!-- HEADER WITH SMALLER LOGO -->
+  <!-- HEADER LOGO -->
   <header>
-    <img src="assets/uta_logo_cropped.png" alt="UTA Logo" class="uta-logo" />
+    <!-- Make sure this path & file name exists -->
+    <img src="assets/uta_logo_cropped.png" alt="UTA Logo">
   </header>
 
-  <!-- RED NOTICE -->
+  <!-- RED PWYW NOTICE -->
   <p class="notice">
-    <b>PWYW (PAY WHAT YOU WANT) TUITION IS ONLY AVAILABLE FOR THE FIRST 20 ENROLLED STUDENTS</b>
+    PWYW (PAY WHAT YOU WANT) TUITION IS ONLY AVAILABLE FOR THE FIRST 20 ENROLLED STUDENTS
   </p>
 
-  <!-- FORM CARD -->
-  <div class="card">
+  <!-- MAIN CONTENT -->
+  <div class="main">
+    <div class="card">
+      <h1>Pay What You Want (PWYW) Enrollment</h1>
 
-    <h2>Pay What You Want (PWYW) Enrollment</h2>
-
-    <p class="description">
-      PWYW means <b>you choose your tuition</b> for the full Unix Training Academy training package.
-      Select an amount that fits your current financial situation and commitment level.
-    </p>
-
-    <form id="payment-form">
-
-      <label>Full Name</label>
-      <input type="text" id="fullName" required />
-
-      <label>Email Address</label>
-      <input type="email" id="email" required />
-
-      <label>Select Your Tuition (PWYW): <span id="tuitionValue">$1,500</span></label>
-      <input type="range" id="tuition" min="999" max="3500" value="1500" />
-
-      <p class="description">
-        PWYW reflects our mission to make premium IT training accessible to everyone.
+      <p>
+        PWYW means <b>you choose your tuition</b> for the full Unix Training Academy training package.
+        Select an amount that fits your current financial situation and commitment level.
       </p>
 
-      <label>Choose Payment Plan</label>
-      <div class="payment-options">
-        <label><input type="radio" name="plan" value="full" checked /> Full Payment – Pay the full tuition today.</label>
-        <label><input type="radio" name="plan" value="split" /> 50% Today, 50% in 30 Days.</label>
-      </div>
+      <form id="payment-form">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" name="fullName" required>
 
-      <!-- CHECKOUT BUTTON -->
-      <button type="submit" id="checkout-btn">Proceed to Secure Checkout</button>
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
 
-    </form>
+        <label for="amount">
+          <span class="slider-label">Select Your Tuition (PWYW): </span>
+          <span id="amountLabel">$1,500</span>
+        </label>
+        <input
+          type="range"
+          id="amount"
+          name="amount"
+          min="999"
+          max="3500"
+          value="1500"
+        >
+
+        <p>
+          PWYW reflects our mission to make premium IT training accessible to everyone.
+        </p>
+
+        <label>Choose Payment Plan</label>
+        <div class="payment-options">
+          <label>
+            <input type="radio" name="plan" value="full" checked>
+            Full Payment – Pay the full tuition today.
+          </label>
+          <label>
+            <input type="radio" name="plan" value="split">
+            50% Today, 50% in 30 Days.
+          </label>
+        </div>
+
+        <button type="submit" id="checkout-btn">
+          Proceed to Secure Checkout
+        </button>
+      </form>
+    </div>
   </div>
 
   <!-- FOOTER -->
   <footer>
-    <p>© 2025 Unix Training Academy. All rights reserved.</p>
+    © 2025 Unix Training Academy. All rights reserved.
   </footer>
 
+  <!-- Your Stripe / Netlify JS file, unchanged -->
   <script src="script.js"></script>
+
+  <!-- Small helper script to update slider label -->
+  <script>
+    const amountInput = document.getElementById('amount');
+    const amountLabel = document.getElementById('amountLabel');
+
+    function formatAmount(value) {
+      return '$' + Number(value).toLocaleString();
+    }
+
+    amountLabel.textContent = formatAmount(amountInput.value);
+
+    amountInput.addEventListener('input', () => {
+      amountLabel.textContent = formatAmount(amountInput.value);
+    });
+  </script>
 
 </body>
 </html>
