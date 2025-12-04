@@ -2,105 +2,66 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Unix Training Academy – Pay What You Want (PWYW) Enrollment</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UTA PWYW Enrollment</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <div class="page-wrapper">
 
-    <!-- FULL-WIDTH GRADIENT HEADER WITH LOGO -->
-    <header class="header-banner">
-      <img
-        src="assets/uta_logo_new.png"
-        alt="Unix Training Academy Logo"
-        class="uta-banner-logo"
-      />
-    </header>
+  <!-- HEADER WITH SMALLER LOGO -->
+  <header>
+    <img src="assets/uta_logo_cropped.png" alt="UTA Logo" class="uta-logo" />
+  </header>
 
-    <main class="main">
-      <section class="card">
+  <!-- RED NOTICE -->
+  <p class="notice">
+    <b>PWYW (PAY WHAT YOU WANT) TUITION IS ONLY AVAILABLE FOR THE FIRST 20 ENROLLED STUDENTS</b>
+  </p>
 
-        <!-- RED SCARCITY NOTE -->
-        <p class="limit-warning">
-          PWYW (PAY WHAT YOU WANT) TUITION IS ONLY AVAILABLE FOR THE FIRST 20 ENROLLED STUDENTS
-        </p>
+  <!-- FORM CARD -->
+  <div class="card">
 
-        <h2>Pay What You Want (PWYW) Enrollment</h2>
-        <p>
-          PWYW means <strong>you choose your tuition</strong> for the full Unix Training Academy training package.
-          Select an amount that fits your current financial situation and commitment level.
-        </p>
+    <h2>Pay What You Want (PWYW) Enrollment</h2>
 
-        <form id="enrollForm">
-          <!-- Name -->
-          <div class="form-group">
-            <label for="studentName">Full Name</label>
-            <input type="text" id="studentName" required />
-          </div>
+    <p class="description">
+      PWYW means <b>you choose your tuition</b> for the full Unix Training Academy training package.
+      Select an amount that fits your current financial situation and commitment level.
+    </p>
 
-          <!-- Email -->
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" required />
-          </div>
+    <form id="payment-form">
 
-          <!-- PWYW Slider -->
-          <div class="form-group">
-            <label for="tuitionSlider">
-              Select Your Tuition (PWYW):
-              <span id="tuitionAmountLabel">$1,500</span>
-            </label>
-            <input
-              type="range"
-              id="tuitionSlider"
-              min="999"
-              max="3500"
-              value="1500"
-              step="10"
-            />
-          </div>
+      <label>Full Name</label>
+      <input type="text" id="fullName" required />
 
-          <p class="fine-print">
-            PWYW reflects our mission to make premium IT training accessible to everyone.
-          </p>
+      <label>Email Address</label>
+      <input type="email" id="email" required />
 
-          <!-- Payment Plan -->
-          <div class="form-group">
-            <label>Choose Payment Plan</label>
+      <label>Select Your Tuition (PWYW): <span id="tuitionValue">$1,500</span></label>
+      <input type="range" id="tuition" min="999" max="3500" value="1500" />
 
-            <label class="radio-option">
-              <input type="radio" name="planType" value="full" checked />
-              Full Payment – Pay the full tuition today.
-            </label>
+      <p class="description">
+        PWYW reflects our mission to make premium IT training accessible to everyone.
+      </p>
 
-            <label class="radio-option">
-              <input type="radio" name="planType" value="split" />
-              50% Today, 50% in 30 Days.
-            </label>
-          </div>
+      <label>Choose Payment Plan</label>
+      <div class="payment-options">
+        <label><input type="radio" name="plan" value="full" checked /> Full Payment – Pay the full tuition today.</label>
+        <label><input type="radio" name="plan" value="split" /> 50% Today, 50% in 30 Days.</label>
+      </div>
 
-          <!-- Submit -->
-          <button type="submit" id="enrollButton" class="primary-btn">
-            Proceed to Secure Checkout
-          </button>
+      <!-- CHECKOUT BUTTON -->
+      <button type="submit" id="checkout-btn">Proceed to Secure Checkout</button>
 
-          <p id="errorMessage" class="error-message" hidden></p>
-        </form>
-
-        <p class="fine-print">
-          Payments are securely processed by Stripe. Your card details never touch our servers.
-        </p>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <p>© <span id="year"></span> Unix Training Academy. All rights reserved.</p>
-    </footer>
+    </form>
   </div>
 
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Unix Training Academy. All rights reserved.</p>
+  </footer>
+
   <script src="script.js"></script>
+
 </body>
 </html>
-
