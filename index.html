@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Unix Training Academy – PWYW Enrollment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="page-wrapper">
+
+    <!-- FULL-WIDTH GRADIENT HEADER WITH LOGO -->
+    <header class="header-banner">
+      <img
+        src="assets/uta_logo_new.png"
+        alt="Unix Training Academy Logo"
+        class="uta-banner-logo"
+      />
+    </header>
+
+    <main class="main">
+      <section class="card">
+        <!-- RED SCARCITY NOTE -->
+        <p class="limit-warning">
+          PWYW TUITION IS ONLY AVAILABLE FOR THE FIRST 20 ENROLLED STUDENTS
+        </p>
+
+        <h2>Pay What You Want Enrollment</h2>
+        <p>
+          Choose your tuition for the full Unix Training Academy training package.
+        </p>
+
+        <form id="enrollForm">
+          <!-- Name -->
+          <div class="form-group">
+            <label for="studentName">Full Name</label>
+            <input type="text" id="studentName" required />
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" required />
+          </div>
+
+          <!-- PWYW Slider -->
+          <div class="form-group">
+            <label for="tuitionSlider">
+              Select Your Tuition:
+              <span id="tuitionAmountLabel">$1,500</span>
+            </label>
+            <input
+              type="range"
+              id="tuitionSlider"
+              min="999"
+              max="3500"
+              value="1500"
+              step="10"
+            />
+          </div>
+
+          <!-- Payment Plan -->
+          <div class="form-group">
+            <label>Choose Payment Plan</label>
+
+            <label class="radio-option">
+              <input type="radio" name="planType" value="full" checked />
+              Full Payment – pay the full tuition today.
+            </label>
+
+            <label class="radio-option">
+              <input type="radio" name="planType" value="split" />
+              50% Today, 50% in 30 Days.
+            </label>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" id="enrollButton" class="primary-btn">
+            Proceed to Secure Checkout
+          </button>
+
+          <p id="errorMessage" class="error-message" hidden></p>
+        </form>
+
+        <p class="fine-print">
+          Payments are securely processed by Stripe. Your card details never touch our
+          servers.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Unix Training Academy. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

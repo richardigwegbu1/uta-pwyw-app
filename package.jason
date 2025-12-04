@@ -1,0 +1,13 @@
+{
+  "name": "uta-pwyw-app",
+  "version": "1.0.0",
+  "description": "Unix Training Academy PWYW Enrollment App",
+  "scripts": {
+    "build": "echo \"No build step\""
+  },
+  "dependencies": {
+    "googleapis": "^131.0.0",
+    "nodemailer": "^6.9.0",
+    "stripe": "^16.0.0"
+  }
+}
