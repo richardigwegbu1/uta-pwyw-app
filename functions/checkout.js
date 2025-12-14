@@ -1,70 +1,94 @@
-export default {
-  async fetch(request, env) {
+// functions/checkout.js
 
-    // Handle GET (for testing)
-    if (request.method === "GET") {
-      return new Response("UTA PWYW API Running", { status: 200 });
+import Stripe from "stripe";
+
+export async function onRequestPost({ request, env }) {
+  try {
+    const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
+      apiVersion: "2023-10-16",
+    });
+
+    const body = await request.json();
+
+    const {
+      fullName,
+      email,
+      phone,
+      amount,
+      plan,
+      paymentPlan,
+    } = body;
+
+    if (!fullName || !email || !amount) {
+      return new Response(
+        JSON.stringify({ error: "Missing required fields" }),
+        { status: 400 }
+      );
     }
 
-    // --- HANDLE CHECKOUT POST REQUEST ---
-    if (request.method === "POST" && new URL(request.url).pathname === "/checkout") {
-      try {
-        const data = await request.json();
+    const amountInCents = Math.round(Number(amount) * 100);
 
-        const { fullName, email, phone, plan, amount } = data;
+    if (amountInCents < 5000) {
+      return new Response(
+        JSON.stringify({ error: "Amount too low" }),
+        { status: 400 }
+      );
+    }
 
-        if (!fullName || !email || !amount) {
-          return new Response(
-            JSON.stringify({ error: "Missing required fields" }),
-            { status: 400 }
-          );
-        }
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      payment_method_types: ["card"],
+      customer_email: email,
 
-        // Create Stripe checkout session
-        const stripeRes = await fetch("https://api.stripe.com/v1/checkout/sessions", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${env.STRIPE_SECRET_KEY}`,
-            "Content-Type": "application/x-www-form-urlencoded",
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name:
+                plan === "full"
+                  ? "UTA Full Tuition"
+                  : "UTA Pay What You Want Tuition",
+              description: `Student: ${fullName}${
+                phone ? " | Phone: " + phone : ""
+              }`,
+            },
+            unit_amount: amountInCents,
           },
-          body: new URLSearchParams({
-            "success_url": "https://offer.unixtrainingacademy.com/success",
-            "cancel_url": "https://offer.unixtrainingacademy.com/cancel",
-            "payment_method_types[]": "card",
-            "mode": "payment",
-            "line_items[0][price_data][currency]": "usd",
-            "line_items[0][price_data][product_data][name]": `UTA Training - ${plan}`,
-            "line_items[0][price_data][unit_amount]": amount * 100,
-            "line_items[0][quantity]": "1",
-            "customer_email": email
-          }),
-        });
+          quantity: 1,
+        },
+      ],
 
-        const stripeData = await stripeRes.json();
+      metadata: {
+        fullName,
+        email,
+        phone: phone || "",
+        plan,
+        paymentPlan,
+      },
 
-        if (stripeData.error) {
-          return new Response(JSON.stringify({ error: stripeData.error }), { status: 500 });
-        }
+      success_url:
+        "https://offer.unixtrainingacademy.com/success.html?session_id={CHECKOUT_SESSION_ID}",
+      cancel_url:
+        "https://offer.unixtrainingacademy.com/index.html?cancelled=true",
+    });
 
-        return new Response(
-          JSON.stringify({ url: stripeData.url }),
-          { status: 200 }
-        );
-
-      } catch (err) {
-        return new Response(
-          JSON.stringify({ error: "Server error", details: err.message }),
-          { status: 500 }
-        );
+    return new Response(
+      JSON.stringify({ url: session.url }),
+      {
+        headers: { "Content-Type": "application/json" },
       }
-    }
+    );
+  } catch (err) {
+    console.error("Checkout error:", err);
 
-    // Default
-    return new Response("Not Found", { status: 404 });
+    return new Response(
+      JSON.stringify({
+        error: "Internal Server Error",
+        details: err.message,
+      }),
+      { status: 500 }
+    );
   }
-};
-
-
-
-
+}
 
