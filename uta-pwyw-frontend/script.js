@@ -1,4 +1,4 @@
-// script.js
+i// script.js — Cloudflare Pages + Functions (Production)
 
 const form = document.getElementById("payment-form");
 
@@ -9,7 +9,9 @@ form.addEventListener("submit", async (e) => {
   const email = document.getElementById("email").value.trim();
   const phone = document.getElementById("phone").value.trim();
 
-  const tuitionOption = document.querySelector('input[name="tuitionOption"]:checked').value;
+  const tuitionOption = document.querySelector(
+    'input[name="tuitionOption"]:checked'
+  ).value;
 
   let amount =
     tuitionOption === "full"
@@ -19,7 +21,9 @@ form.addEventListener("submit", async (e) => {
   const paymentPlanRadio = document.querySelector(
     'input[name="paymentPlan"]:checked'
   );
-  const paymentPlan = paymentPlanRadio ? paymentPlanRadio.value : "full";
+  const paymentPlan = paymentPlanRadio
+    ? paymentPlanRadio.value
+    : "full";
 
   const payload = {
     fullName,
@@ -31,41 +35,23 @@ form.addEventListener("submit", async (e) => {
   };
 
   try {
-    // 1️⃣ Save to Google Sheets
-    await fetch("/.netlify/functions/saveToSheet", {
+    const res = await fetch("/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
-
-    // 2️⃣ Create Stripe Checkout Session
-    const res = await fetch(
-      "/.netlify/functions/create-checkout-session",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      }
-    );
 
     const data = await res.json();
 
     if (data.url) {
       window.location.href = data.url;
     } else {
-      alert("Checkout session could not be created.");
+      alert("Checkout failed. Please try again.");
       console.error(data);
     }
   } catch (err) {
-    alert("A network error occurred while submitting your form.");
+    alert("Network error. Please try again.");
     console.error(err);
   }
 });
-
-
-
-
-
-
-
 
